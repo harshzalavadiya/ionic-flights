@@ -1,0 +1,2 @@
+red:#FF2A67
+orange:#FF5C3C
