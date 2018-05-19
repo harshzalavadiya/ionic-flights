@@ -4,8 +4,13 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { PipesModule } from '../pipes/pipes.module';
+import { HttpClientModule } from '@angular/common/http';
+import { SelectSearchableModule } from 'ionic-select-searchable';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { HttpRequestProvider } from '../providers/http-request/http-request';
 
 @NgModule({
   declarations: [
@@ -14,6 +19,9 @@ import { HomePage } from '../pages/home/home';
   ],
   imports: [
     BrowserModule,
+    PipesModule,
+    HttpClientModule,
+    SelectSearchableModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -24,7 +32,8 @@ import { HomePage } from '../pages/home/home';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HttpRequestProvider
   ]
 })
 export class AppModule {}

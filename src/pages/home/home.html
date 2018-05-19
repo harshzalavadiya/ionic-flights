@@ -1,14 +1,77 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
+    <ion-title>Flight
+      <strong>Search</strong>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <ion-list class="flight-type" [(ngModel)]="tripType" radio-group no-lines>
+    <ion-item *ngFor="let type of tripTypes">
+      <ion-radio [value]="type"></ion-radio>
+      <ion-label>{{type}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div class="search">
+    <div class="ap-from">
+      <span class="label-title">from</span>
+      <span class="label-city text-dark">New Delhi</span>
+      <span class="label-code">DEL</span>
+    </div>
+    <hr/>
+    <div class="swap">
+      <img src="assets/imgs/swap-arrows.svg">
+    </div>
+    <div class="ap-to">
+      <span class="label-title">to</span>
+      <span class="label-city text-dark">Mumbai</span>
+      <span class="label-code">BOM</span>
+    </div>
+    <hr/>
+    <div class="ap-date">
+      <div (click)="pickerDepart.open()">
+        <span class="label-title">departure</span>
+        <span class="label-date text-dark">{{departDate | dateFormat:'dd'}}</span>
+        <div class="label-date-desc">
+            {{departDate | dateFormat:'MMM yyyy'}}
+            <br/>
+            {{departDate | dateFormat:'EEEE'}}
+        </div>
+        <button ion-button [hidden]="true">
+          <ion-datetime #pickerDepart pickerFormat="DD MMM YYYY" [min]="departDateMin" [(ngModel)]="departDate" (ionChange)="updateDepartDate()"></ion-datetime>
+        </button>
+      </div>
+      <div (click)="pickerReturn.open()" *ngIf="tripType == 'Round Trip'">
+        <span class="label-title">return</span>
+        <span class="label-date text-dark">{{returnDate | dateFormat:'dd'}}</span>
+        <div class="label-date-desc">
+            {{returnDate | dateFormat:'MMM yyyy'}}
+            <br/>
+            {{returnDate | dateFormat:'EEEE'}}
+        </div>
+        <button ion-button [hidden]="true">
+          <ion-datetime #pickerReturn pickerFormat="DD MMM YYYY" [min]="departDate" [(ngModel)]="returnDate" (ionChange)="updateReturnDate()"></ion-datetime>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ion-item>
+      <select-searchable
+          [(ngModel)]="port"
+          [items]="ports"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          (onChange)="portChange($event)">
+          <ng-template selectSearchableLabelTemplate>
+              Port
+          </ng-template>
+      </select-searchable>
+  </ion-item>
+  
+
+  <pre>{{airports|json}}</pre>
 </ion-content>

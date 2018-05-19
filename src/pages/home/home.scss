@@ -1,3 +1,101 @@
-page-home {
+$spacing-base: 15px;
+$color-gray: #9B9B9B;
+$color-dark: #000;
+$swap-size: 30px;
 
+.flight-type {
+    display: table;
+    margin: 10px auto;
+    text-align: center;
+    ion-label {
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+    .item-block,
+    .item-inner {
+        padding: 0;
+        margin: 0;
+        width: auto;
+        display: inline-block;
+        min-height: auto;
+    }
+    .item-md ion-radio {
+        height: 0;
+        opacity: 0;
+        margin: 0;
+    }
+    .item-radio-checked {
+        ion-label {
+            background: url('../assets/imgs/checked-rounded.svg') no-repeat center left 4px;
+            background-size: 16px auto;
+            padding-left: 24px!important;
+            background-color: color($colors, primary);
+            color: #fff;
+        }
+    }
+    .input-wrapper {
+        ion-label {
+            border-radius: 20px;
+            padding: 5px 10px;
+            
+            margin: 0;
+            margin-top: 10px;
+        }
+    }
+}
+
+page-home {
+    .search {
+        color: $color-gray;
+        margin-bottom: $spacing-base;
+        .ap-from,
+        .ap-to,
+        .ap-date {
+            margin: 0 $spacing-base;
+        }
+        .label-title {
+            display: block;
+            text-transform: uppercase;
+            font-size: 12px;
+            line-height: 1em;
+        }
+        .label-city {
+            margin-right: 5px;
+        }
+        .text-dark {
+            color: $color-dark;
+        }
+        .label-city,
+        .label-code {
+            font-size: 20px;
+            font-weight: 500;
+        }
+        .label-date {
+            font-size: 28px;
+            font-weight: 500;
+        }
+        .label-date-desc {
+            font-size: 11px;
+            display: inline-block;
+            line-height: 1.1em;
+        }
+        .ap-date div {
+            display: inline-block;
+            width: 48%;
+        }
+        .swap {
+            width: $swap-size;
+            background: #fff;
+            box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4);
+            padding: 8px;
+            border-radius: $swap-size;
+            height: $swap-size;
+            margin-top: -$swap-size;
+            float: right;
+            margin-right: $swap-size;
+        }
+        hr {
+            margin: $spacing-base 0;
+        }
+    }
 }
