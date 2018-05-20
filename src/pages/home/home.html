@@ -15,63 +15,52 @@
   </ion-list>
 
   <div class="search">
-    <div class="ap-from">
+    <div class="ap-from" (click)="depAp.open()">
       <span class="label-title">from</span>
-      <span class="label-city text-dark">New Delhi</span>
-      <span class="label-code">DEL</span>
+      <span class="label-city text-dark">{{departAp?.city_name}}</span>
+      <span class="label-code">{{departAp?.IATA_code}}</span>
     </div>
     <hr/>
-    <div class="swap">
+    <div class="swap" (click)="swapAirports()">
       <img src="assets/imgs/swap-arrows.svg">
     </div>
-    <div class="ap-to">
+    <div class="ap-to" (click)="retAp.open()">
       <span class="label-title">to</span>
-      <span class="label-city text-dark">Mumbai</span>
-      <span class="label-code">BOM</span>
+      <span class="label-city text-dark">{{returnAp?.city_name}}</span>
+      <span class="label-code">{{returnAp?.IATA_code}}</span>
     </div>
     <hr/>
     <div class="ap-date">
-      <div (click)="pickerDepart.open()">
+      <div (click)="pkrDpt.open()">
         <span class="label-title">departure</span>
         <span class="label-date text-dark">{{departDate | dateFormat:'dd'}}</span>
         <div class="label-date-desc">
-            {{departDate | dateFormat:'MMM yyyy'}}
-            <br/>
-            {{departDate | dateFormat:'EEEE'}}
+          {{departDate | dateFormat:'MMM yyyy'}}
+          <br/> {{departDate | dateFormat:'EEEE'}}
         </div>
         <button ion-button [hidden]="true">
-          <ion-datetime #pickerDepart pickerFormat="DD MMM YYYY" [min]="departDateMin" [(ngModel)]="departDate" (ionChange)="updateDepartDate()"></ion-datetime>
+          <ion-datetime #pkrDpt pickerFormat="DD MMM YYYY" [min]="departDateMin" [(ngModel)]="departDate" (ionChange)="onUpdateDepartDate()"></ion-datetime>
         </button>
       </div>
-      <div (click)="pickerReturn.open()" *ngIf="tripType == 'Round Trip'">
+      <div (click)="pkrRet.open()" *ngIf="tripType == 'Round Trip'">
         <span class="label-title">return</span>
         <span class="label-date text-dark">{{returnDate | dateFormat:'dd'}}</span>
         <div class="label-date-desc">
-            {{returnDate | dateFormat:'MMM yyyy'}}
-            <br/>
-            {{returnDate | dateFormat:'EEEE'}}
+          {{returnDate | dateFormat:'MMM yyyy'}}
+          <br/> {{returnDate | dateFormat:'EEEE'}}
         </div>
         <button ion-button [hidden]="true">
-          <ion-datetime #pickerReturn pickerFormat="DD MMM YYYY" [min]="departDate" [(ngModel)]="returnDate" (ionChange)="updateReturnDate()"></ion-datetime>
+          <ion-datetime #pkrRet pickerFormat="DD MMM YYYY" [min]="departDate" [(ngModel)]="returnDate"></ion-datetime>
         </button>
       </div>
     </div>
+    <div class="ap-sbtn" text-center>
+      <button (click)="searchFlights()">Search</button>
+    </div>
   </div>
 
-  <ion-item>
-      <select-searchable
-          [(ngModel)]="port"
-          [items]="ports"
-          itemValueField="id"
-          itemTextField="name"
-          [canSearch]="true"
-          (onChange)="portChange($event)">
-          <ng-template selectSearchableLabelTemplate>
-              Port
-          </ng-template>
-      </select-searchable>
-  </ion-item>
-  
-
-  <pre>{{airports|json}}</pre>
+  <select-searchable #depAp [(ngModel)]="departAp" [items]="airports" [hidden]="true" itemValueField="IATA_code" itemTextField="city_name"
+    [canSearch]="true"></select-searchable>
+  <select-searchable #retAp [(ngModel)]="returnAp" [items]="airports" [hidden]="true" itemValueField="IATA_code" itemTextField="city_name"
+    [canSearch]="true"></select-searchable>
 </ion-content>

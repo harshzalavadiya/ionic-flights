@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 import { HttpRequestProvider } from '../../providers/http-request/http-request';
 import { SelectSearchableComponent } from 'ionic-select-searchable';
 
-class Port {
-  public id: number;
-  public name: string;
+class Airport {
+  public IATA_code: string;
+  public ICAO_code: string;
+  public airport_name: string;
+  public city_name: string;
 }
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
-  airports: Array<object>;
   tripType: string;
   tripTypes: Array<string>;
   departDateMin: string;
@@ -23,39 +25,44 @@ export class HomePage {
   returnDate: string;
   airportFrom: object;
   airportTo: object;
-  ports: Port[];
-  port: Port;
+  airports: Airport[];
+  departAp: Airport;
+  returnAp: Airport;
 
   constructor(public navCtrl: NavController, private http: HttpRequestProvider) {
-    this.airports = [];
     this.tripTypes = ['One Way', 'Round Trip'];
     this.tripType = this.tripTypes[0];
     this.departDateMin = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString();
   }
 
   ionViewDidLoad() {
-    this.ports = [
-      { id: 1, name: 'Tokai' },
-      { id: 2, name: 'Vladivostok' },
-      { id: 3, name: 'Navlakhi' }
-    ];
     this.http.get("airports.json").subscribe((data: object) => {
       this.airports = data["airports"];
+      this.departAp = this.airports[1];
+      this.returnAp = this.airports[26];
     }, error => {
       console.log(error);
     });
   }
 
-  portChange(event: { component: SelectSearchableComponent, value: any }) {
-    console.log('port:', event.value);
-  }
-
-  updateDepartDate() {
+  onUpdateDepartDate() {
     this.returnDate = this.departDate;
   }
 
-  updateReturnDate() {
+  swapAirports(){
+    let tmp: Airport = this.departAp;
+    this.departAp = this.returnAp;
+    this.returnAp = tmp;
+  }
 
+  searchFlights(){
+    this.navCtrl.push('FlightListPage', {
+      from: this.departAp,
+      to: this.returnAp,
+      tripType: this.tripType,
+      departDate: this.departDate,
+      returnDate: this.returnDate
+    });
   }
 
 }

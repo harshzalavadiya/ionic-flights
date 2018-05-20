@@ -15,7 +15,17 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-
 .header-md::after{
    opacity: 0.5;
+}
+
+@mixin base-background(){
+    background: linear-gradient(to top right, color($colors, primary), color($colors, secondary));
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+@mixin base-box-shadow(){
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 }

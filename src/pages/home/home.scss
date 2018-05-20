@@ -1,6 +1,4 @@
 $spacing-base: 15px;
-$color-gray: #9B9B9B;
-$color-dark: #000;
 $swap-size: 30px;
 
 .flight-type {
@@ -19,6 +17,7 @@ $swap-size: 30px;
         display: inline-block;
         min-height: auto;
     }
+    .item-ios .radio-ios, 
     .item-md ion-radio {
         height: 0;
         opacity: 0;
@@ -26,18 +25,13 @@ $swap-size: 30px;
     }
     .item-radio-checked {
         ion-label {
-            background: url('../assets/imgs/checked-rounded.svg') no-repeat center left 4px;
-            background-size: 16px auto;
-            padding-left: 24px!important;
-            background-color: color($colors, primary);
-            color: #fff;
+            @include base-background();
         }
     }
     .input-wrapper {
         ion-label {
             border-radius: 20px;
             padding: 5px 10px;
-            
             margin: 0;
             margin-top: 10px;
         }
@@ -48,6 +42,16 @@ page-home {
     .search {
         color: $color-gray;
         margin-bottom: $spacing-base;
+        .ap-sbtn{
+            button{
+                @include base-background();
+                margin: 30px;
+                border-radius: 5em;
+                text-align: center;
+                width: 5em;
+                line-height: 5em;
+            }
+        }
         .ap-from,
         .ap-to,
         .ap-date {
